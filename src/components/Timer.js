@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/Timer.css'
 
 function Timer() {
@@ -15,7 +15,7 @@ function Timer() {
         if (!intervalId) {
             const startTime = Date.now();
             const interval = setInterval(() => {
-                const value = (currentValue + Math.round((Date.now() - startTime) / 100) / 10);
+                const value = (currentValue + (Date.now() - startTime));
                 setCurrentValue(value);
             }, 100);
             setIntervalId(interval);
@@ -28,10 +28,11 @@ function Timer() {
     }
 
     const formatTime = (numTime) => {
-        let hours = Math.floor(numTime / 3600);
-        let minutes = Math.floor((numTime - hours * 3600) / 60);
-        let seconds = (numTime - hours * 3600 - minutes * 60);
-        let secondString = seconds.toLocaleString(undefined, {minimumFractionDigits:1})
+        let totalSeconds = numTime / 1000;
+        let hours = Math.floor(totalSeconds / 3600);
+        let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
+        let seconds = (totalSeconds - hours * 3600 - minutes * 60);
+        let secondString = seconds.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
         if (hours < 10) hours = '0' + hours;
         if (minutes < 10) minutes = '0' + minutes;
         if (seconds < 10) secondString = '0' + secondString;
