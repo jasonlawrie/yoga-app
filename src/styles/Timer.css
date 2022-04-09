@@ -1,0 +1,38 @@
+.timer-component {
+    display: inline-block;
+    margin: 10px;
+    padding: 20px;
+    height: 80px;
+    width: 300px;
+    border-style: solid;
+    border-radius: 10px;
+    background-color:coral;
+}
+
+.timer-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.timer-display {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    padding: 10px;
+    font-size: 30px;
+}
+
+.timer-buttons button {
+    border-style: solid;
+    border-color: black;
+    border-radius: 3px;
+    background-color: bisque;
+    height: 26px;
+    width: 80px;
+    font-weight: 200;
+}
+
+.timer-buttons > button:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
