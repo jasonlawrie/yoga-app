@@ -703,10 +703,10 @@ module.exports = function (webpackEnv) {
             // otherwise.
             '../**/src/**/*.{ts,tsx}',
             '**/src/**/*.{ts,tsx}',
-            '!**/src/**/__tests__/**',
-            '!**/src/**/?(*.)(spec|test).*',
+            '!**/test/**/__tests__/**',
+            '!**/test/**/?(*.)(spec|test).*',
             '!**/src/setupProxy.*',
-            '!**/src/setupTests.*',
+            '!**/test/setupTests.*',
           ],
           silent: true,
           // The formatter is invoked directly in WebpackDevServerUtils during development
