@@ -16,8 +16,7 @@ function Timer() {
             const startTime = Date.now();
             const startValue = currentValue;
             const interval = setInterval(() => {
-                const value = (startValue + (Date.now() - startTime));
-                setCurrentValue(value);
+                setCurrentValue((startValue + (Date.now() - startTime)));
             }, 100);
             setIntervalId(interval);
         }
