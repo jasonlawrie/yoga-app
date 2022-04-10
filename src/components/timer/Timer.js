@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Timer.css'
+import './Timer.css'
 
 function Timer({ duration }) {
     const [currentValue, setCurrentValue] = useState(duration*1000);
@@ -19,6 +19,7 @@ function Timer({ duration }) {
                 if (value >= 0) {
                     setCurrentValue(value);
                 } else {
+                    setCurrentValue(0);
                     stopTimer();
                 }
             }, 100);
