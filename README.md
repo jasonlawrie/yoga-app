@@ -1,6 +1,6 @@
 # Yoga App
 
-This project is intended as a tool to plan, organize, and lay out a yoga practice session alone or for a group
+This project is intended as a tool to plan, organize, and lay out a yoga practice session alone or for a group  
 It is also a practice project to experiment with the features of React
 
 Note: This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

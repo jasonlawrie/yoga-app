@@ -6,7 +6,18 @@
     width: 300px;
     border-style: solid;
     border-radius: 10px;
-    background-color:coral;
+}
+
+.timer-component.green {
+    background-color:green;
+}
+
+.timer-component.red {
+    background-color:red;
+}
+
+.timer-component.yellow {
+    background-color:yellow;
 }
 
 .timer-buttons {

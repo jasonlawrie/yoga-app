@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import './Timer.css'
 
 function Timer({ duration }) {
-    const [currentValue, setCurrentValue] = useState(duration*1000);
+    const [currentValue, setCurrentValue] = useState(duration * 1000);
     const [intervalId, setIntervalId] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState("green");
 
     const resetTimer = () => {
         stopTimer();
-        setCurrentValue(duration*1000);
+        setCurrentValue(duration * 1000);
+        setBackgroundColor(formatColor(duration * 1000));
     }
 
     const startTimer = () => {
@@ -20,23 +22,27 @@ function Timer({ duration }) {
                     setCurrentValue(value);
                 } else {
                     setCurrentValue(0);
-                    stopTimer();
+                    clearInterval(interval);
+                    setIntervalId(false);
                 }
+                setBackgroundColor(formatColor(value));
             }, 100);
             setIntervalId(interval);
         }
     }
 
     const stopTimer = () => {
-        clearInterval(intervalId);
-        setIntervalId(false);
+        if (intervalId) {
+            clearInterval(intervalId);
+            setIntervalId(false);
+        }
     }
 
     const formatTime = (numTime) => {
-        let totalSeconds = numTime / 1000;
+        const totalSeconds = numTime / 1000;
         let hours = Math.floor(totalSeconds / 3600);
         let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
-        let seconds = (totalSeconds - hours * 3600 - minutes * 60);
+        const seconds = (totalSeconds - hours * 3600 - minutes * 60);
         let secondString = seconds.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
         if (hours < 10) hours = '0' + hours;
         if (minutes < 10) minutes = '0' + minutes;
@@ -44,8 +50,24 @@ function Timer({ duration }) {
         return hours + ':' + minutes + ':' + secondString;
     }
 
+    const formatColor = (numTime) => {
+        let color = "red";
+        switch (true) {
+            case (numTime > 3000):
+                color = "green";
+                break;
+            case (numTime > 0):
+                color = "yellow";
+                break;
+            default:
+                color = "red";
+                break;
+        }
+        return color;
+    }
+
     return (
-        <span className="timer-component">
+        <div className={`timer-component ${backgroundColor}`}>
             <div className="timer-display">
                 {formatTime(currentValue)}
             </div>
@@ -54,7 +76,7 @@ function Timer({ duration }) {
                 <button onClick={startTimer}>START</button>
                 <button onClick={stopTimer}>STOP</button>
             </div>
-        </span>
+        </div>
     )
 }
 
