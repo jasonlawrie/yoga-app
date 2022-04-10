@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import '../styles/Timer.css'
 
-function Timer() {
-    const [currentValue, setCurrentValue] = useState(0);
+function Timer({ duration }) {
+    const [currentValue, setCurrentValue] = useState(duration*1000);
     const [intervalId, setIntervalId] = useState(false);
 
     const resetTimer = () => {
-        clearInterval(intervalId);
-        setIntervalId(false);
-        setCurrentValue(0);
+        stopTimer();
+        setCurrentValue(duration*1000);
     }
 
     const startTimer = () => {
@@ -16,7 +15,12 @@ function Timer() {
             const startTime = Date.now();
             const startValue = currentValue;
             const interval = setInterval(() => {
-                setCurrentValue((startValue + (Date.now() - startTime)));
+                const value = startValue - (Date.now() - startTime);
+                if (value >= 0) {
+                    setCurrentValue(value);
+                } else {
+                    stopTimer();
+                }
             }, 100);
             setIntervalId(interval);
         }
