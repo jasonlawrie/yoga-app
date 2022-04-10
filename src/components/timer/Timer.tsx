@@ -39,15 +39,14 @@ function Timer({ duration }) {
     }
 
     const formatTime = (numTime) => {
-        const totalSeconds = numTime / 1000;
-        let hours = Math.floor(totalSeconds / 3600);
-        let minutes = Math.floor((totalSeconds - hours * 3600) / 60);
-        const seconds = (totalSeconds - hours * 3600 - minutes * 60);
-        let secondString = seconds.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
-        if (hours < 10) hours = '0' + hours;
-        if (minutes < 10) minutes = '0' + minutes;
-        if (seconds < 10) secondString = '0' + secondString;
-        return hours + ':' + minutes + ':' + secondString;
+        const totalSeconds: number = numTime / 1000;
+        const hours: number = Math.floor(totalSeconds / 3600);
+        const minutes: number = Math.floor((totalSeconds - hours * 3600) / 60);
+        const seconds: number = (totalSeconds - hours * 3600 - minutes * 60);
+        let secondString = seconds.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).padStart(4, "0");
+        let minuteString = String(minutes).padStart(2, "0");
+        let hourString = String(hours).padStart(2, "0");
+        return hourString + ':' + minuteString + ':' + secondString;
     }
 
     const formatColor = (numTime) => {

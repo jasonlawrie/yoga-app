@@ -1,10 +1,10 @@
 import './App.css';
-import Timer from './components/timer/Timer.js';
+import Timer from './components/timer/Timer.tsx';
 
 function App() {
   return (
     <div className="App">
-      <Timer duration="5"/>
+      <Timer duration="15"/>
     </div>
   );
 }
