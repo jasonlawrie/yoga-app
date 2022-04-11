@@ -5,8 +5,8 @@ function Timer({ duration }) {
     const [currentValue, setCurrentValue] = useState(duration * 1000);
     const [intervalId, setIntervalId] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState("green");
-    var context = new AudioContext();
-    var o = context.createOscillator();
+    const context = new AudioContext();
+    const o = context.createOscillator();
     o.frequency.setTargetAtTime(0, context.currentTime, 0.001);
     o.connect(context.destination);
     let isStarted = false;
