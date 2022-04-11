@@ -5,11 +5,17 @@ function Timer({ duration }) {
     const [currentValue, setCurrentValue] = useState(duration * 1000);
     const [intervalId, setIntervalId] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState("green");
+    const context = new AudioContext();
+    const o = context.createOscillator();
+    o.frequency.setTargetAtTime(0, context.currentTime, 0.001);
+    o.connect(context.destination);
+    let isStarted = false;
+
 
     const resetTimer = () => {
         stopTimer();
         setCurrentValue(duration * 1000);
-        setBackgroundColor(formatColor(duration * 1000));
+        setBackgroundColor("green");
     }
 
     const startTimer = () => {
@@ -25,7 +31,7 @@ function Timer({ duration }) {
                     clearInterval(interval);
                     setIntervalId(false);
                 }
-                setBackgroundColor(formatColor(value));
+                triggerEvents(value);
             }, 100);
             setIntervalId(interval);
         }
@@ -43,26 +49,45 @@ function Timer({ duration }) {
         const hours: number = Math.floor(totalSeconds / 3600);
         const minutes: number = Math.floor((totalSeconds - hours * 3600) / 60);
         const seconds: number = (totalSeconds - hours * 3600 - minutes * 60);
-        let secondString = seconds.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).padStart(4, "0");
-        let minuteString = String(minutes).padStart(2, "0");
-        let hourString = String(hours).padStart(2, "0");
+        const secondString = seconds.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).padStart(4, "0");
+        const minuteString = String(minutes).padStart(2, "0");
+        const hourString = String(hours).padStart(2, "0");
         return hourString + ':' + minuteString + ':' + secondString;
     }
 
-    const formatColor = (numTime) => {
-        let color = "red";
+    const playTone = (m) => {
+        o.frequency.setTargetAtTime(0, context.currentTime, 0.001);
+        o.frequency.setTargetAtTime(Math.pow(2, (m - 69) / 12) * 440, context.currentTime + .1, 0.001);
+        o.frequency.setTargetAtTime(0, context.currentTime + 0.3, 0.001);
+        if (!isStarted) {
+            o.start(0);
+            isStarted = true;
+        }
+    }
+
+    const triggerEvents = (numTime) => {
         switch (true) {
-            case (numTime > 3000):
-                color = "green";
+            case (numTime <= 3050 && numTime > 2950):
+                setBackgroundColor("yellow");
+                playTone(60);
                 break;
-            case (numTime > 0):
-                color = "yellow";
+            case (numTime <= 2050 && numTime > 1950):
+                playTone(60);
                 break;
-            default:
-                color = "red";
+            case (numTime <= 1050 && numTime > 950):
+                playTone(60);
+                break;
+            case (numTime < 50):
+                setBackgroundColor("red");
+                playTone(72);
+                setTimeout(() => {
+                    if (isStarted) {
+                        o.stop(0);
+                        isStarted = false;
+                    }
+                }, 500);
                 break;
         }
-        return color;
     }
 
     return (
