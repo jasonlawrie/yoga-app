@@ -66,7 +66,6 @@ function Timer({ duration }) {
     }
 
     const triggerEvents = (numTime) => {
-        console.log(numTime);
         switch (true) {
             case (numTime <= 3050 && numTime > 2950):
                 setBackgroundColor("yellow");
